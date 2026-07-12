@@ -35,7 +35,9 @@ jobs:
 
       - name: Verify source commit
         run: |
-          test "$(git rev-parse HEAD)" = "032b799f2a4dbd2235fc462cadacbdfd7bffef33"
+          pinned="032b799f2a4dbd2235fc462cadacbdfd7bffef33"
+          test "$(git rev-parse HEAD^)" = "$pinned"
+          test "$(git diff --name-only "$pinned" HEAD)" = ".github/workflows/s918b-dyi3-manager.yml"
         working-directory: .
 
       - name: Setup Java
