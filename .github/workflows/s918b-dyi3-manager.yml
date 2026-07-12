@@ -33,11 +33,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Verify source commit
+      - name: Verify and detach at pinned source
         run: |
           pinned="032b799f2a4dbd2235fc462cadacbdfd7bffef33"
           git merge-base --is-ancestor "$pinned" HEAD
           test "$(git diff --name-only "$pinned" HEAD)" = ".github/workflows/s918b-dyi3-manager.yml"
+          git checkout --detach "$pinned"
+          test "$(git rev-parse HEAD)" = "$pinned"
         working-directory: .
 
       - name: Setup Java
